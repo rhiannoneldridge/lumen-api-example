@@ -1,0 +1,65 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Users and Roles",
+        "description": "This is a Users and Roles API using Lumen and Swagger",
+        "contact": {
+            "email": "rhiannon.eldridge.au@gmail.com"
+        },
+        "license": {
+            "name": "BY-NC-SA",
+            "url": "https://creativecommons.org/licenses/by-nc-sa/4.0"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Localhost Server"
+        }
+    ],
+    "paths": {
+        "/version": {
+            "get": {
+                "summary": "Get the API Version",
+                "operationId": "apiVersion",
+                "responses": {
+                    "200": {
+                        "description": "Valid response containing the API version"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "api_key": {
+                "type": "apiKey",
+                "name": "api_key",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "roles",
+            "description": "User Roles",
+            "externalDocs": {
+                "description": "Additional docs go here...",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "users",
+            "description": "Users",
+            "externalDocs": {
+                "description": "Additional docs go here...",
+                "url": "http://swagger.io"
+            }
+        }
+    ],
+    "externalDocs": {
+        "description": "Overall docs go here...",
+        "url": "http://swagger.io"
+    }
+}
