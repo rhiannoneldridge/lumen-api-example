@@ -29,9 +29,193 @@
                     }
                 }
             }
+        },
+        "/api/users": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Create user",
+                "operationId": "createUser",
+                "requestBody": {
+                    "description": "Create user object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUpdateUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Created"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get user",
+                "operationId": "getUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The specified user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update user",
+                "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update user object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUpdateUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Updated"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete user",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The user has been deleted"
+                    }
+                }
+            }
         }
     },
     "components": {
+        "schemas": {
+            "CreateRole": {
+                "title": "Create Role model",
+                "description": "Create Role model",
+                "type": "object"
+            },
+            "CreateUpdateUser": {
+                "title": "Create/Update User model",
+                "description": "Create/Update User model",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of User",
+                        "format": "string"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Email Address of User",
+                        "format": "email"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "User password (sha384 hash)",
+                        "format": "string"
+                    },
+                    "api_token": {
+                        "title": "API Token",
+                        "description": "API Token for this user",
+                        "format": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Role": {
+                "title": "Role model",
+                "description": "Role model"
+            },
+            "User": {
+                "title": "User model",
+                "description": "User model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID of user",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of User",
+                        "format": "string"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "Email Address of User",
+                        "format": "email"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "User password (sha384 hash)",
+                        "format": "string"
+                    },
+                    "api_token": {
+                        "title": "API Token",
+                        "description": "API Token for this user",
+                        "format": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "api_key": {
                 "type": "apiKey",

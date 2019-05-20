@@ -11,11 +11,8 @@ $router->get('/version', function () use ($router) {
 });
 
 $router->group(['middleware' => 'auth', 'prefix' => 'api'], function () use ($router ) {
-    $router->group(['prefix' => 'users', 'namespace' => 'Users'], function () use ($router) {
-
-    });
-
-    $router->group(['prefix' => 'roles', 'namespace' => 'Roles'], function () use ($router) {
-
-    });
+    $router->post('users', 'App\Http\Controllers\UserController@createUser');
+    $router->put('users', 'App\Http\Controllers\UserController@updateUser');
+    $router->get('users/{id}', 'App\Http\Controllers\UserController@getUser');
+    $router->delete('users/{id}', 'App\Http\Controllers\UserController@deleteUser');
 });

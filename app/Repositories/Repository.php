@@ -11,10 +11,20 @@ class Repository implements RepositoryInterface
     /** @var  \Illuminate\Database\Eloquent\Model */
     protected $model;
 
+    public function __construct(Model $model)
+    {
+        $this->setModel($model);
+    }
+
     public function setModel(Model $model)
     {
         $this->model = $model;
         return $this;
+    }
+
+    public function getModel()
+    {
+        return $this->model;
     }
 
     public function all()
@@ -24,7 +34,7 @@ class Repository implements RepositoryInterface
 
     public function get(int $id)
     {
-        return $this->model->find($id);
+        return $this->model->findOrFail($id);
     }
 
     public function delete(int $id)
@@ -44,6 +54,6 @@ class Repository implements RepositoryInterface
 
     public function update(array $params, int $id)
     {
-        return $this->model->find($id)->update($params);
+        return $this->model->findOrFail($id)->update($params);
     }
 }

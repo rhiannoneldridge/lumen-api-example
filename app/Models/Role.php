@@ -4,6 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *     title="Role model",
+ *     description="Role model",
+ * )
+ */
 class Role extends Model
 {
     /**
