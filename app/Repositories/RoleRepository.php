@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
-class RoleRepository
+class RoleRepository extends Repository
 {
+
 }

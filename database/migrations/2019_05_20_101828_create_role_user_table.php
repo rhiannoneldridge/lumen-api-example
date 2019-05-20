@@ -20,7 +20,7 @@ class CreateRoleUserTable extends Migration
 
             $table->index('role_id');
             $table->index('user_id');
-            $table->index(['role_id', 'user_id']);
+            $table->unique(['role_id', 'user_id']);
         });
     }
 
