@@ -45,9 +45,14 @@ class RoleController extends Controller
     /**
      * @param Request $request
      * @return RoleRepository|\Illuminate\Database\Eloquent\Model
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function createRole(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|unique:roles',
+        ]);
+
         return $this->role->create($request->only($this->role->getModel()->getFillable()));
     }
 
@@ -82,9 +87,14 @@ class RoleController extends Controller
      * @param Request $request
      * @param int $id
      * @return bool
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function updateRole(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => 'required|unique:roles',
+        ]);
+
         $id = filter_var($id, FILTER_VALIDATE_INT);
 
         if (false === $id) {

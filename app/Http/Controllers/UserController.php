@@ -45,9 +45,17 @@ class UserController extends Controller
     /**
      * @param Request $request
      * @return UserRepository|\Illuminate\Database\Eloquent\Model
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function createUser(Request $request)
     {
+        $this->validate($request, [
+            'name'      => 'required|string',
+            'email'     => 'required|email|unique:users',
+            'password'  => 'required|string',
+            'api_key'   => 'required|unique:users',
+        ]);
+
         return $this->user->create($request->only($this->user->getModel()->getFillable()));
     }
 
@@ -82,9 +90,17 @@ class UserController extends Controller
      * @param Request $request
      * @param int $id
      * @return bool
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function updateUser(Request $request, $id)
     {
+        $this->validate($request, [
+            'name'      => 'sometimes|string',
+            'email'     => 'sometimes|email|unique:users',
+            'password'  => 'sometimes|string',
+            'api_key'   => 'sometimes|unique:users',
+        ]);
+
         $id = filter_var($id, FILTER_VALIDATE_INT);
 
         if (false === $id) {
