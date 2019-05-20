@@ -167,4 +167,29 @@ class UserController extends Controller
 
         return $this->user->get($id);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/users",
+     *     tags={"users"},
+     *     summary="Get All Users",
+     *     operationId="getUser",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Array of all Users",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/User")
+     *         )
+     *     )
+     * )
+     */
+
+    /**
+     * @return UserRepository[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllUsers()
+    {
+        return $this->user->all();
+    }
 }

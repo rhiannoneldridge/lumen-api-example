@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * @OA\Schema(
  *     title="Role",
@@ -12,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Role extends Model
 {
+    use SoftDeletes;
+
     /**
      * @OA\Property(
      *     property="id",
@@ -55,6 +59,15 @@ class Role extends Model
      */
     protected $hidden =[
         'users',
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'deleted_at'
     ];
 
     public function users()

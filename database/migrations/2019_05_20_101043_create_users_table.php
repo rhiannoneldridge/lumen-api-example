@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('api_token');
 
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

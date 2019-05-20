@@ -27,14 +27,14 @@ class RoleController extends Controller
      * @OA\Post(
      *     path="/api/roles",
      *     tags={"roles"},
-     *     summary="Create role",
+     *     summary="Create Role",
      *     operationId="createRole",
      *     @OA\Response(
      *         response="200",
      *         description="Role Created"
      *     ),
      *     @OA\RequestBody(
-     *         description="Create role object",
+     *         description="Create Role object",
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/CreateUpdateRole")
      *     )
@@ -54,7 +54,7 @@ class RoleController extends Controller
      * @OA\Put(
      *     path="/api/roles/{id}",
      *     tags={"roles"},
-     *     summary="Update role",
+     *     summary="Update Role",
      *     operationId="updateRole",
      *     @OA\Response(
      *         response="200",
@@ -70,7 +70,7 @@ class RoleController extends Controller
      *         )
      *     ),
      *     @OA\RequestBody(
-     *         description="Update role object",
+     *         description="Update Role object",
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/CreateUpdateRole")
      *     )
@@ -97,11 +97,11 @@ class RoleController extends Controller
      * @OA\Delete(
      *     path="/api/roles/{id}",
      *     tags={"roles"},
-     *     summary="Delete role",
+     *     summary="Delete Role",
      *     operationId="deleteRole",
      *     @OA\Response(
      *         response="200",
-     *         description="The role has been deleted"
+     *         description="The Role has been deleted"
      *     ),
      *     @OA\Parameter(
      *         name="id",
@@ -134,11 +134,11 @@ class RoleController extends Controller
      * @OA\Get(
      *     path="/api/roles/{id}",
      *     tags={"roles"},
-     *     summary="Get role",
+     *     summary="Get Role",
      *     operationId="getRole",
      *     @OA\Response(
      *         response="200",
-     *         description="The specified role",
+     *         description="The specified Role",
      *         @OA\JsonContent(ref="#/components/schemas/Role")
      *     ),
      *     @OA\Parameter(
@@ -166,5 +166,30 @@ class RoleController extends Controller
         }
 
         return $this->role->get($id);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/roles",
+     *     tags={"roles"},
+     *     summary="Get All Roles",
+     *     operationId="getRole",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Array of all Roles",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Role")
+     *         )
+     *     )
+     * )
+     */
+
+    /**
+     * @return RoleRepository[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllRoles()
+    {
+        return $this->role->all();
     }
 }
