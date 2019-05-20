@@ -15,4 +15,9 @@ $router->group(['middleware' => 'auth', 'prefix' => 'api'], function () use ($ro
     $router->put('users', 'App\Http\Controllers\UserController@updateUser');
     $router->get('users/{id}', 'App\Http\Controllers\UserController@getUser');
     $router->delete('users/{id}', 'App\Http\Controllers\UserController@deleteUser');
+
+    $router->post('roles', 'App\Http\Controllers\RoleController@createRole');
+    $router->put('roles', 'App\Http\Controllers\RoleController@updateRole');
+    $router->get('roles/{id}', 'App\Http\Controllers\RoleController@getRole');
+    $router->delete('roles/{id}', 'App\Http\Controllers\RoleController@deleteRole');
 });

@@ -10,8 +10,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 /**
  * @OA\Schema(
- *     title="User model",
- *     description="User model",
+ *     title="User",
+ *     description="User schema",
  * )
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract
@@ -22,7 +22,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @OA\Property(
      *     property="id",
      *     format="int64",
-     *     description="ID of user",
+     *     description="ID of User",
      *     title="ID",
      * )
      * @OA\Property(
@@ -40,8 +40,29 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @OA\Property(
      *     property="api_token",
      *     format="string",
-     *     description="API Token for this user",
+     *     description="API Token for this User",
      *     title="API Token",
+     * )
+     * @OA\Property(
+     *     property="created_at",
+     *     format="string",
+     *     description="Date User was created",
+     *     title="Created At",
+     * )
+     * @OA\Property(
+     *     property="updated_at",
+     *     format="string",
+     *     description="Date User was last updated",
+     *     title="Updated At",
+     * )
+     * @OA\Property(
+     *     property="roles",
+     *     description="Roles assigned to this User",
+     *     title="Roles",
+     *     type="array",
+     *     @OA\Items(
+     *         ref="#/components/schemas/Role"
+     *     )
      * )
      */
 

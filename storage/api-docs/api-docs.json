@@ -30,6 +30,120 @@
                 }
             }
         },
+        "/api/roles": {
+            "post": {
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Create role",
+                "operationId": "createRole",
+                "requestBody": {
+                    "description": "Create role object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUpdateRole"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role Created"
+                    }
+                }
+            }
+        },
+        "/api/roles/{id}": {
+            "get": {
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Get role",
+                "operationId": "getRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The specified role",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Role"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Update role",
+                "operationId": "updateRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update role object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUpdateRole"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Role Updated"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Delete role",
+                "operationId": "deleteRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The role has been deleted"
+                    }
+                }
+            }
+        },
         "/api/users": {
             "post": {
                 "tags": [
@@ -86,7 +200,7 @@
                     }
                 }
             },
-            "post": {
+            "put": {
                 "tags": [
                     "users"
                 ],
@@ -147,9 +261,16 @@
     },
     "components": {
         "schemas": {
-            "CreateRole": {
-                "title": "Create Role model",
-                "description": "Create Role model",
+            "CreateUpdateRole": {
+                "title": "Create/Update Role model",
+                "description": "Create/Update Role model",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of Role",
+                        "format": "string"
+                    }
+                },
                 "type": "object"
             },
             "CreateUpdateUser": {
@@ -168,7 +289,7 @@
                     },
                     "password": {
                         "title": "Password",
-                        "description": "User password (sha384 hash)",
+                        "description": "User password",
                         "format": "string"
                     },
                     "api_token": {
@@ -180,16 +301,39 @@
                 "type": "object"
             },
             "Role": {
-                "title": "Role model",
-                "description": "Role model"
-            },
-            "User": {
-                "title": "User model",
-                "description": "User model",
+                "title": "Role",
+                "description": "Role schema",
                 "properties": {
                     "id": {
                         "title": "ID",
-                        "description": "ID of user",
+                        "description": "ID of Role",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of Role",
+                        "format": "string"
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "description": "Date Role was created",
+                        "format": "string"
+                    },
+                    "updated_at": {
+                        "title": "Updated At",
+                        "description": "Date Role was last updated",
+                        "format": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "description": "User schema",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID of User",
                         "format": "int64"
                     },
                     "name": {
@@ -202,15 +346,28 @@
                         "description": "Email Address of User",
                         "format": "email"
                     },
-                    "password": {
-                        "title": "Password",
-                        "description": "User password (sha384 hash)",
-                        "format": "string"
-                    },
                     "api_token": {
                         "title": "API Token",
-                        "description": "API Token for this user",
+                        "description": "API Token for this User",
                         "format": "string"
+                    },
+                    "created_at": {
+                        "title": "Created At",
+                        "description": "Date User was created",
+                        "format": "string"
+                    },
+                    "updated_at": {
+                        "title": "Updated At",
+                        "description": "Date User was last updated",
+                        "format": "string"
+                    },
+                    "roles": {
+                        "title": "Roles",
+                        "description": "Roles assigned to this User",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Role"
+                        }
                     }
                 },
                 "type": "object"
