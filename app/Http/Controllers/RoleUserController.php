@@ -27,7 +27,7 @@ class RoleUserController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/users/{id}/roles",
+     *     path="/api/users/{user_id}/roles",
      *     tags={"userRoles"},
      *     summary="Assign User Roles",
      *     operationId="assignUserRoles",
@@ -40,7 +40,7 @@ class RoleUserController extends Controller
      *         )
      *     ),
      *     @OA\Parameter(
-     *         name="id",
+     *         name="user_id",
      *         in="path",
      *         required=true,
      *         @OA\Schema(
@@ -76,7 +76,11 @@ class RoleUserController extends Controller
             return response('User ID is not a valid integer.', 422);
         }
 
-        $roleIds = $request->json();
+        $roleIds = json_decode($request->getContent(), true);
+
+        if (empty($roleIds) || !is_array($roleIds)) {
+            return response('Invalid Role IDs.', 422);
+        }
 
         $roleIds = array_values($roleIds);
 
@@ -103,7 +107,7 @@ class RoleUserController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/users/{id}/roles/{role_id}",
+     *     path="/api/users/{user_id}/roles/{role_id}",
      *     tags={"userRoles"},
      *     summary="Assign User Role",
      *     operationId="assignUserRole",
@@ -159,14 +163,14 @@ class RoleUserController extends Controller
 
         $this->user->setModel($user);
 
-        $this->user->assignRolesToUser($roleId);
+        $this->user->assignRolesToUser(Arr::wrap($roleId));
 
         return $this->user->getRolesFromUser();
     }
 
     /**
      * @OA\Delete(
-     *     path="/api/users/{id}/roles/{role_id}",
+     *     path="/api/users/{user_id}/roles/{role_id}",
      *     tags={"userRoles"},
      *     summary="Delete User Role",
      *     operationId="deleteUserRole",
@@ -222,14 +226,14 @@ class RoleUserController extends Controller
 
         $this->user->setModel($user);
 
-        $this->user->removeRolesFromUser($roleId);
+        $this->user->removeRolesFromUser(Arr::wrap($roleId));
 
         return $this->user->getRolesFromUser();
     }
 
     /**
      * @OA\Delete(
-     *     path="/api/users/{id}/roles",
+     *     path="/api/users/{user_id}/roles",
      *     tags={"userRoles"},
      *     summary="Delete All User Roles",
      *     operationId="deleteUserRoles",
@@ -238,7 +242,7 @@ class RoleUserController extends Controller
      *         description="The User has had their Roles deleted"
      *     ),
      *     @OA\Parameter(
-     *         name="id",
+     *         name="user_id",
      *         in="path",
      *         required=true,
      *         @OA\Schema(
@@ -271,7 +275,7 @@ class RoleUserController extends Controller
 
         $this->user->removeRolesFromUser($roleIds);
 
-        return true;
+        return response('Removed All Roles from User', 200);
     }
 
     /**

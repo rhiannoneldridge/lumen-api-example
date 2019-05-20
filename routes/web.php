@@ -11,21 +11,22 @@ $router->get('/version', function () use ($router) {
 });
 
 $router->group(['middleware' => 'auth', 'prefix' => 'api'], function () use ($router ) {
-    $router->post('users', 'App\Http\Controllers\UserController@createUser');
-    $router->put('users', 'App\Http\Controllers\UserController@updateUser');
-    $router->get('users', 'App\Http\Controllers\UserController@getAllUsers');
-    $router->get('users/{id}', 'App\Http\Controllers\UserController@getUser');
-    $router->delete('users/{id}', 'App\Http\Controllers\UserController@deleteUser');
+    $router->post('users', 'UserController@createUser');
+    $router->put('users/{id}', 'UserController@updateUser');
+    $router->get('users', 'UserController@getAllUsers');
+    $router->get('users/{id}', 'UserController@getUser');
+    $router->delete('users/{id}', 'UserController@deleteUser');
 
-    $router->put('users/{id}/roles', 'App\Http\Controllers\RoleUserController@assignUserRole');
-    $router->get('users/{user_id}/roles/{role_id}', 'App\Http\Controllers\RoleUserController@getUserRole');
-    $router->get('users/{id}/roles', 'App\Http\Controllers\RoleUserController@getUserRoles');
-    $router->delete('users/{user_id}/roles', 'App\Http\Controllers\RoleUserController@removeAllUserRoles');
-    $router->delete('users/{user_id}/roles/{role_id}', 'App\Http\Controllers\RoleUserController@removeUserRole');
+    $router->put('users/{user_id}/roles/{role_id}', 'RoleUserController@assignUserRole');
+    $router->put('users/{id}/roles', 'RoleUserController@assignUserRoles');
+    $router->get('users/{user_id}/roles/{role_id}', 'RoleUserController@getUserRole');
+    $router->get('users/{id}/roles', 'RoleUserController@getUserRoles');
+    $router->delete('users/{user_id}/roles', 'RoleUserController@removeAllUserRoles');
+    $router->delete('users/{user_id}/roles/{role_id}', 'RoleUserController@removeUserRole');
 
-    $router->post('roles', 'App\Http\Controllers\RoleController@createRole');
-    $router->put('roles', 'App\Http\Controllers\RoleController@updateRole');
-    $router->get('roles', 'App\Http\Controllers\RoleController@getAllRoles');
-    $router->get('roles/{id}', 'App\Http\Controllers\RoleController@getRole');
-    $router->delete('roles/{id}', 'App\Http\Controllers\RoleController@deleteRole');
+    $router->post('roles', 'RoleController@createRole');
+    $router->put('roles/{id}', 'RoleController@updateRole');
+    $router->get('roles', 'RoleController@getAllRoles');
+    $router->get('roles/{id}', 'RoleController@getRole');
+    $router->delete('roles/{id}', 'RoleController@deleteRole');
 });

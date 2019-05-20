@@ -39,11 +39,11 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection|Model[]
+     * @return \Illuminate\Support\Collection
      */
     public function all()
     {
-        return $this->model->all();
+        return $this->model->get();
     }
 
     /**
@@ -90,5 +90,14 @@ class Repository implements RepositoryInterface
     public function update(array $params, int $id)
     {
         return $this->model->findOrFail($id)->update($params);
+    }
+
+    /**
+     * @param array $relations
+     * @return \Illuminate\Database\Eloquent\Builder|Model
+     */
+    public function with(array $relations)
+    {
+        return $this->model->with($relations);
     }
 }

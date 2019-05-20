@@ -50,10 +50,10 @@ class UserController extends Controller
     public function createUser(Request $request)
     {
         $this->validate($request, [
-            'name'      => 'required|string',
-            'email'     => 'required|email|unique:users',
-            'password'  => 'required|string',
-            'api_key'   => 'required|unique:users',
+            'name'          => 'required|string',
+            'email'         => 'required|email|unique:users',
+            'password'      => 'required|string',
+            'api_token'     => 'required|unique:users',
         ]);
 
         return $this->user->create($request->only($this->user->getModel()->getFillable()));
@@ -67,7 +67,8 @@ class UserController extends Controller
      *     operationId="updateUser",
      *     @OA\Response(
      *         response="200",
-     *         description="User Updated"
+     *         description="User Updated",
+     *         @OA\JsonContent(ref="#/components/schemas/User")
      *     ),
      *     @OA\Parameter(
      *         name="id",
@@ -89,16 +90,16 @@ class UserController extends Controller
     /**
      * @param Request $request
      * @param int $id
-     * @return bool
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model[]|\Illuminate\Http\Response|\Illuminate\Support\Collection|\Laravel\Lumen\Http\ResponseFactory
      * @throws \Illuminate\Validation\ValidationException
      */
     public function updateUser(Request $request, $id)
     {
         $this->validate($request, [
-            'name'      => 'sometimes|string',
-            'email'     => 'sometimes|email|unique:users',
-            'password'  => 'sometimes|string',
-            'api_key'   => 'sometimes|unique:users',
+            'name'          => 'sometimes|string',
+            'email'         => 'sometimes|email|unique:users',
+            'password'      => 'sometimes|string',
+            'api_token'     => 'sometimes|unique:users',
         ]);
 
         $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -107,7 +108,9 @@ class UserController extends Controller
             return response('ID is not a valid integer.', 422);
         }
 
-        return $this->user->update($request->only($this->user->getModel()->getFillable()), $id);
+        $this->user->update($request->only($this->user->getModel()->getFillable()), $id);
+
+        return $this->user->with(['roles'])->get($id);
     }
 
     /**
@@ -144,7 +147,11 @@ class UserController extends Controller
             return response('ID is not a valid integer.', 422);
         }
 
-        return $this->user->delete($id);
+        if (!$this->user->delete($id)) {
+            return response('Unable to delete User.', 422);
+        }
+
+        return response('User has been deleted.', 200);
     }
 
     /**
@@ -172,7 +179,7 @@ class UserController extends Controller
 
     /**
      * @param int $id
-     * @return UserRepository|\Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory|mixed
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model[]|\Illuminate\Http\Response|\Illuminate\Support\Collection|\Laravel\Lumen\Http\ResponseFactory
      */
     public function getUser($id)
     {
@@ -203,7 +210,7 @@ class UserController extends Controller
      */
 
     /**
-     * @return UserRepository[]|\Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Support\Collection
      */
     public function getAllUsers()
     {

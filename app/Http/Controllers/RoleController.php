@@ -32,7 +32,8 @@ class RoleController extends Controller
      *     operationId="createRole",
      *     @OA\Response(
      *         response="200",
-     *         description="Role Created"
+     *         description="Role Created",
+     *         @OA\JsonContent(ref="#/components/schemas/Role")
      *     ),
      *     @OA\RequestBody(
      *         description="Create Role object",
@@ -64,7 +65,8 @@ class RoleController extends Controller
      *     operationId="updateRole",
      *     @OA\Response(
      *         response="200",
-     *         description="Role Updated"
+     *         description="Role Updated",
+     *         @OA\JsonContent(ref="#/components/schemas/Role")
      *     ),
      *     @OA\Parameter(
      *         name="id",
@@ -85,8 +87,8 @@ class RoleController extends Controller
 
     /**
      * @param Request $request
-     * @param int $id
-     * @return bool
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Model[]|\Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      * @throws \Illuminate\Validation\ValidationException
      */
     public function updateRole(Request $request, $id)
@@ -101,7 +103,9 @@ class RoleController extends Controller
             return response('ID is not a valid integer.', 422);
         }
 
-        return $this->role->update($request->only($this->role->getModel()->getFillable()), $id);
+        $this->role->update($request->only($this->role->getModel()->getFillable()), $id);
+
+        return $this->role->get($id);
     }
 
     /**
@@ -138,7 +142,11 @@ class RoleController extends Controller
             return response('ID is not a valid integer.', 422);
         }
 
-        return $this->role->delete($id);
+        if (!$this->role->delete($id)) {
+            return response('Unable to delete Role.', 422);
+        }
+
+        return response('Role has been deleted.', 200);
     }
 
     /**

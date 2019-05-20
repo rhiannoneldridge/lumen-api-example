@@ -83,7 +83,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'password',
+        'password', 'pivot',
     ];
 
     /**
@@ -95,8 +95,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'deleted_at'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function roles()
     {
-        $this->belongsToMany(Role::class, 'role_user');
+        return $this->belongsToMany(Role::class, 'role_user');
     }
 }

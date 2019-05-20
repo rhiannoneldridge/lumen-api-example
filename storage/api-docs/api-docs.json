@@ -72,7 +72,14 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Role Created"
+                        "description": "Role Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Role"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -138,7 +145,14 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Role Updated"
+                        "description": "Role Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Role"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -166,7 +180,40 @@
                 }
             }
         },
-        "/api/users/{id}/roles": {
+        "/api/users/{user_id}/roles": {
+            "get": {
+                "tags": [
+                    "userRoles"
+                ],
+                "summary": "Get All Roles from User",
+                "operationId": "getAllUserRoles",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of all Roles assigned to this User",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "put": {
                 "tags": [
                     "userRoles"
@@ -175,7 +222,7 @@
                 "operationId": "assignUserRoles",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "user_id",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -224,7 +271,7 @@
                 "operationId": "deleteUserRoles",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "user_id",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -240,7 +287,49 @@
                 }
             }
         },
-        "/api/users/{id}/roles/{role_id}": {
+        "/api/users/{user_id}/roles/{role_id}": {
+            "get": {
+                "tags": [
+                    "userRoles"
+                ],
+                "summary": "Get Role from User",
+                "operationId": "getUser",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of all Roles assigned to this User",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "put": {
                 "tags": [
                     "userRoles"
@@ -301,85 +390,6 @@
                     },
                     {
                         "name": "role_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Array of all Roles assigned to this User",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Role"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/users/{user_id}/roles/{role_id}": {
-            "get": {
-                "tags": [
-                    "userRoles"
-                ],
-                "summary": "Get Role from User",
-                "operationId": "getUser",
-                "parameters": [
-                    {
-                        "name": "user_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    },
-                    {
-                        "name": "role_id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Array of all Roles assigned to this User",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Role"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/users/{user_id}/roles": {
-            "get": {
-                "tags": [
-                    "userRoles"
-                ],
-                "summary": "Get All Roles from User",
-                "operationId": "getAllUserRoles",
-                "parameters": [
-                    {
-                        "name": "user_id",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -513,7 +523,14 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "User Updated"
+                        "description": "User Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -659,11 +676,17 @@
         "securitySchemes": {
             "api_key": {
                 "type": "apiKey",
-                "name": "api_key",
+                "description": "Your API Key",
+                "name": "X-Api-Key",
                 "in": "header"
             }
         }
     },
+    "security": [
+        {
+            "api_key": []
+        }
+    ],
     "tags": [
         {
             "name": "roles",

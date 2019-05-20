@@ -23,10 +23,10 @@ class DatabaseSeeder extends Seeder
 
         // create our base user
         $user = $userRepo->create([
-            'name'      => 'Example User',
-            'email'     => 'someone@example.com',
-            'password'  => 'test123',
-            'api_key'   => 'test',
+            'name'          => 'Example User',
+            'email'         => 'someone@example.com',
+            'password'      => 'test123',
+            'api_token'     => 'test',
         ]);
 
         $roleRepo = new RoleRepository(new Role());

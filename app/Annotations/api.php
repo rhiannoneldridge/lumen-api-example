@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @OA\OpenApi(
+ *     security={
+ *         {"api_key": {}}
+ *     }
+ * )
  * @OA\Info(
  *     description="This is a Users and Roles API using Lumen and Swagger",
  *     version="1.0.0",
@@ -40,8 +45,9 @@
  * @OA\SecurityScheme(
  *     type="apiKey",
  *     in="header",
+ *     name="X-Api-Key",
  *     securityScheme="api_key",
- *     name="api_key"
+ *     description="Your API Key"
  * )
  * @OA\Get(
  *     path="/version",

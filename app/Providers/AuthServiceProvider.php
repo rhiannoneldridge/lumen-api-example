@@ -31,9 +31,9 @@ class AuthServiceProvider extends ServiceProvider
         $auth->viaRequest('api', function ($request) {
             /** @var \Illuminate\Http\Request $request */
 
-            if ($request->input('api_token')) {
+            if ($request->hasHeader('x-api-key')) {
                 return User::query()
-                    ->where('api_token', $request->input('api_token'))
+                    ->where('api_token', $request->header('x-api-key'))
                     ->first();
             }
         });

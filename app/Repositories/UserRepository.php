@@ -18,6 +18,23 @@ class UserRepository extends Repository
     }
 
     /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function all()
+    {
+        return $this->model->with('roles')->get();
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Model[]
+     */
+    public function get(int $id)
+    {
+        return $this->model->with('roles')->findOrFail($id);
+    }
+
+    /**
      * @param array $params
      * @param int $id
      * @return bool
@@ -37,7 +54,10 @@ class UserRepository extends Repository
      */
     public function assignRolesToUser(array $roleIds)
     {
-        $this->getModel()->attach($roleIds);
+        /** @var \App\Models\User $user */
+        $user = $this->getModel();
+
+        $user->roles()->syncWithoutDetaching($roleIds);
     }
 
     /**
@@ -46,7 +66,10 @@ class UserRepository extends Repository
      */
     public function removeRolesFromUser(array $roleIds)
     {
-        $this->getModel()->detach($roleIds);
+        /** @var \App\Models\User $user */
+        $user = $this->getModel();
+
+        $user->roles()->detach($roleIds);
     }
 
     /**
@@ -55,7 +78,10 @@ class UserRepository extends Repository
      */
     public function getRoleFromUser(int $roleId)
     {
-        return $this->getModel()->roles()->findOrFail($roleId);
+        /** @var \App\Models\User $user */
+        $user = $this->getModel();
+
+        return $user->roles()->findOrFail($roleId);
     }
 
     /**
@@ -63,6 +89,9 @@ class UserRepository extends Repository
      */
     public function getRolesFromUser()
     {
-        return $this->getModel()->roles()->all();
+        /** @var \App\Models\User $user */
+        $user = $this->getModel();
+
+        return $user->roles()->get();
     }
 }

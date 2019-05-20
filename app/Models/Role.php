@@ -58,7 +58,7 @@ class Role extends Model
      * @var array
      */
     protected $hidden =[
-        'users',
+        'users', 'pivot',
     ];
 
     /**
@@ -70,8 +70,11 @@ class Role extends Model
         'deleted_at'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function users()
     {
-        $this->belongsToMany(User::class, 'role_user');
+        return $this->belongsToMany(User::class, 'role_user');
     }
 }
