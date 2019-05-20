@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Models\Role;
 use App\Repositories\RoleRepository;
-use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -173,7 +174,7 @@ class RoleController extends Controller
      *     path="/api/roles",
      *     tags={"roles"},
      *     summary="Get All Roles",
-     *     operationId="getRole",
+     *     operationId="getRoles",
      *     @OA\Response(
      *         response="200",
      *         description="Array of all Roles",

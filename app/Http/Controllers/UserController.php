@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -27,14 +28,14 @@ class UserController extends Controller
      * @OA\Post(
      *     path="/api/users",
      *     tags={"users"},
-     *     summary="Create user",
+     *     summary="Create User",
      *     operationId="createUser",
      *     @OA\Response(
      *         response="200",
      *         description="User Created"
      *     ),
      *     @OA\RequestBody(
-     *         description="Create user object",
+     *         description="Create User object",
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/CreateUpdateUser")
      *     )
@@ -54,7 +55,7 @@ class UserController extends Controller
      * @OA\Put(
      *     path="/api/users/{id}",
      *     tags={"users"},
-     *     summary="Update user",
+     *     summary="Update User",
      *     operationId="updateUser",
      *     @OA\Response(
      *         response="200",
@@ -70,7 +71,7 @@ class UserController extends Controller
      *         )
      *     ),
      *     @OA\RequestBody(
-     *         description="Update user object",
+     *         description="Update User object",
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/CreateUpdateUser")
      *     )
@@ -97,11 +98,11 @@ class UserController extends Controller
      * @OA\Delete(
      *     path="/api/users/{id}",
      *     tags={"users"},
-     *     summary="Delete user",
+     *     summary="Delete User",
      *     operationId="deleteUser",
      *     @OA\Response(
      *         response="200",
-     *         description="The user has been deleted"
+     *         description="The User has been deleted"
      *     ),
      *     @OA\Parameter(
      *         name="id",
@@ -134,11 +135,11 @@ class UserController extends Controller
      * @OA\Get(
      *     path="/api/users/{id}",
      *     tags={"users"},
-     *     summary="Get user",
+     *     summary="Get User",
      *     operationId="getUser",
      *     @OA\Response(
      *         response="200",
-     *         description="The specified user",
+     *         description="The specified User",
      *         @OA\JsonContent(ref="#/components/schemas/User")
      *     ),
      *     @OA\Parameter(
@@ -173,7 +174,7 @@ class UserController extends Controller
      *     path="/api/users",
      *     tags={"users"},
      *     summary="Get All Users",
-     *     operationId="getUser",
+     *     operationId="getUsers",
      *     @OA\Response(
      *         response="200",
      *         description="Array of all Users",

@@ -6,7 +6,7 @@ class UserRepository extends Repository
 {
     /**
      * @param array $params
-     * @return Repository|\Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function create(array $params)
     {
@@ -33,29 +33,36 @@ class UserRepository extends Repository
 
     /**
      * @param array $roleIds
-     * @param int $id
-     * @return UserRepository|UserRepository[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     * @return void
      */
-    public function assignRolesToUser(array $roleIds, int $id)
+    public function assignRolesToUser(array $roleIds)
     {
-        $user = $this->get($id);
-
-        $user->getModel()->attach($roleIds);
-
-        return $user;
+        $this->getModel()->attach($roleIds);
     }
 
     /**
      * @param array $roleIds
-     * @param int $id
-     * @return UserRepository|UserRepository[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     * @return void
      */
-    public function removeRolesFromUser(array $roleIds, int $id)
+    public function removeRolesFromUser(array $roleIds)
     {
-        $user = $this->get($id);
+        $this->getModel()->detach($roleIds);
+    }
 
-        $user->getModel()->detach($roleIds);
+    /**
+     * @param int $roleId
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function getRoleFromUser(int $roleId)
+    {
+        return $this->getModel()->roles()->findOrFail($roleId);
+    }
 
-        return $user;
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Model[]
+     */
+    public function getRolesFromUser()
+    {
+        return $this->getModel()->roles()->all();
     }
 }

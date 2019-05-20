@@ -35,7 +35,9 @@ class DatabaseSeeder extends Seeder
             'name'      => 'Administrator',
         ]);
 
-        $userRepo->assignRolesToUser(Arr::wrap($role->id), $user->id);
+        $userRepo->setModel($user);
+
+        $userRepo->assignRolesToUser(Arr::wrap($role->id));
 
         $roleRepo->create([
             'name'      => 'Manager',
